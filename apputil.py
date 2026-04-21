@@ -96,6 +96,41 @@ def update_board(current_board):
 
     return updated_board
 
+def play_game(board=None, max_steps=30, pause=0.1):
+    """ Recursively plays Conway's Game of Life and displays the result of each step. 
+    The tick speed is increased from show_game so we can increase the number of steps.
+
+    Args:
+        board (np.array 2d, optional): the board to use. Defaults to None.
+        max_steps (int, optional): the number of steps before stopping. Defaults to 10.
+        pause (float, optional): the length of one tick. Defaults to 0.1.
+
+    Returns:
+        np.array, 2d: the board at the end of the run
+    """
+    # The base case will be no steps
+    if max_steps == 0:
+        return board
+
+    # If no board is given, create one randomly
+    if board is None:
+        board = np.random.randint(2, size=(10, 10))
+
+    # Run one tick of the game
+    board = update_board(board)
+
+    # Show the board as in show_game
+    clear_output(wait=True)
+    sns.heatmap(board, cmap='tab20c_r', 
+            cbar=False, square=True, linewidths=1)
+    plt.title(f'Recursive Game with {max_steps-1} Steps Remaining')
+    plt.show()
+
+    time.sleep(pause)
+
+    # Repeat with max_steps -1
+    return play_game(board=board, max_steps=max_steps-1)
+
 
 def show_game(game_board, n_steps=10, pause=0.5):
     """
