@@ -38,13 +38,22 @@ def num_neighbors(board, cell):
     return count
 
 def update_board(current_board):
-    # Start with a copy of the current board state.
+    """ Updates the give 2d board with one tick following the rules
+    for Conway's Game of Life
+
+    Args:
+        current_board (np.array, 2d): a binary 2d array with 0 representing
+        dead cells and 1 representing living cells
+
+    Returns:
+        np.array: the board after the update
+    """
     # A note about updating: if we update the original board,
     # we will mess up the conditions for the following cells as
     # we step through the board. However, if we copy the board, 
     # this doubles our time and memory usage. Instead, I decided
     # to add two temporary states that we can update with a second
-    # pass. This still has time 2n but saves memory.
+    # pass. This saves memory while keeping the same time complexity.
 
     # The 4 states represent:
     #  0: 0 --> 0
